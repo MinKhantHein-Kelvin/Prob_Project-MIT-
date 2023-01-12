@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between">
+    <button mat-raised-button class="mt-4 mb-2" [routerLink]="['/']"><mat-icon>add</mat-icon>New</button>
+    <div class="right-side d-flex">
+      <!-- <form class="form-inline"> -->
+        <!-- <mat-form-field style="margin-top: 6px; margin-right: 8px;">
+          <mat-label class="text-warning">Search Employee......</mat-label>
+          <input matInput placeholder="Search ID or Name" formControlName="obj">
+        </mat-form-field> -->
+      <!-- </form> -->
+      <button mat-raised-button color="primary" class="mt-4 mb-2" (click)="getAllEmployee()"><mat-icon>group</mat-icon>All</button>
+    </div>
+  </div>
+
+    <div class="employee-list">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Employee ID</th>
+                <th scope="col">Joined Date</th>
+                <th scope="col">Employee Name</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">Rank</th>
+                <th scope="col">Department</th>
+                <th scope="col">Gender</th>
+                <!-- <th scope="col">Interest</th> -->
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Address</th>
+                <th scope="col">Remark</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let employee of employees">
+                <td style="font-weight: bold;">{{employee.empId}}</td>
+                <td>{{employee.Joined_Date}}</td>
+                <td>{{employee.Employee_Name}}</td>
+                <td>{{employee.Date_of_Birth}}</td>
+                <td>{{employee.Ranking}}</td>
+                <td>{{employee.Department}}</td>
+                <td>{{employee.Gender}}</td>
+                <!-- <td>{{employee.Interest}}</td> -->
+                <td>{{employee.Phone}}</td>
+                <td>{{employee.Email}}</td>
+                <td>{{employee.Address}}</td>
+                <td>{{employee.Remark}}</td>
+                <td>
+                    <mat-icon class="edit-icon mr-2" color="primary" >edit</mat-icon>
+                    <mat-icon class="delete-icon" color="warn" (click)="deleteEmployee(employee)">delete_forever</mat-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>

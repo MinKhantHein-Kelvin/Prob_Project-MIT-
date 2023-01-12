@@ -1,0 +1,46 @@
+.emp-form{
+    background: #e9ecec;
+    // height: 100vh;
+    width: 50% !important;
+    margin: 0 auto;
+    padding: 20px 0;
+    // .add-emp-title{
+    //   font-family: Poppins, sans-serif;
+    // }
+    table{
+      tr{
+        // line-height: 3;
+        .first{
+          width: 20%;
+          text-align: left;
+          padding-left: 5px;
+        }
+        .second{
+          width: 28%;
+        }
+        .third{
+          width: 20%;
+          text-align: left;
+          padding-left: 30px;
+        }
+        .fourth{
+          width: 28%; 
+
+          .interest-container{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+
+            .checkboxItem{
+                width: 50%;
+                line-height: 2em;
+              }
+          }         
+        }
+        .form-check-input {
+          width: 1rem !important;
+          height: 1rem !important;
+        }
+      }
+    }
+  }
