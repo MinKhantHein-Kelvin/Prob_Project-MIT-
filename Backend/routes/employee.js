@@ -1,18 +1,21 @@
 var router = require('express').Router();
 var connection = require ('../database');
+var multer  = require('multer');
+var path = require ('path');
 
+const storage = multer.diskStorage({
+    destination: './upload/images',
+    filename: (req, file, cb) => {
+        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+    }
+})
 
-// Get all Employee
-router.get('/', (req, res)=>{
-    let sql = "SELECT * FROM EMPLOYEE_INFO"
-    connection.query(sql, (err, result)=>{
-        if (err) throw err;
-        res.send(result);
-    })
-});
+const upload = multer({
+    storage: storage,
+})
 
 // Add Employee
-router.post('/', (req,res)=>{
+router.post('/', upload.single('Image'), (req,res)=>{
     let empId = req.body.empId;
     let Joined_Date = req.body.Joined_Date;
     let Employee_Name = req.body.Employee_Name;
@@ -25,6 +28,7 @@ router.post('/', (req,res)=>{
     let Email = req.body.Email;
     let Address = req.body.Address;
     let Remark = req.body.Remark;
+    let Image = req.file.filename;
 
     connection.query(`SELECT COUNT(*) AS cnt FROM employee_info WHERE empId = ${empId}`, (err,data)=>{
         if(err){
@@ -35,7 +39,7 @@ router.post('/', (req,res)=>{
                 res.json({success : false, message : "Employee ID Already Exist!"});
             }
             else{
-                let sql = `INSERT INTO employee_info (empId, Joined_Date, Employee_Name, Date_of_Birth, Ranking, Department, Gender, Interest, Phone, Email, Address, Remark) VALUES ('${empId}', '${Joined_Date}', '${Employee_Name}', '${Date_of_Birth}', '${Ranking}', '${Department}', '${Gender}', '${Interest}', '${Phone}' ,'${Email}', '${Address}', '${Remark}')`;
+                let sql = `INSERT INTO employee_info (empId, Joined_Date, Employee_Name, Date_of_Birth, Ranking, Department, Gender, Interest, Phone, Email, Address, Remark, Image) VALUES ('${empId}', '${Joined_Date}', '${Employee_Name}', '${Date_of_Birth}', '${Ranking}', '${Department}', '${Gender}', '${Interest}', '${Phone}' ,'${Email}', '${Address}', '${Remark}', '${Image}')`;
                 connection.query(sql, (err, result)=>{
                     if (err) throw err;
                     res.send(result);
@@ -44,6 +48,17 @@ router.post('/', (req,res)=>{
         }
     });
 });
+
+
+// Get all Employee
+router.get('/', (req, res)=>{
+    let sql = "SELECT * FROM EMPLOYEE_INFO"
+    connection.query(sql, (err, result)=>{
+        if (err) throw err;
+        res.send(result);
+    })
+});
+
 
 // Update Employee
 router.patch('/:id', (req,res)=>{

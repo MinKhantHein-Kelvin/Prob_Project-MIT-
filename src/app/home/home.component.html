@@ -9,7 +9,7 @@
                 <td class="first"><label for="">Employee ID :</label></td>
                 <td class="second"><input type="text" class="form-control" placeholder="eg.100001" formControlName="empId" [class.is-invalid]="EmpId.invalid && EmpId.touched"></td>
                 <td class="third"><label for="">Joined Date :</label></td>
-                <td class="fourth"><input type="date" class="form-control" id="datepicker" formControlName="joinDate"></td>
+                <td class="fourth"><input type="date" class="form-control" id="datepicker" formControlName="joinDate" max="{{date | date:'yyyy-MM-dd'}}"></td>
               </tr>
               <!-- validation -->
               <tr>
@@ -26,7 +26,7 @@
                 <td class="first"><label for="">Employee Name :</label></td>
                 <td class="second"><input type="text" class="form-control" formControlName="empName" [class.is-invalid]="EmpName.invalid && EmpName.touched"></td>
                 <td class="third"><label for="">Date of Birth :</label></td>
-                <td class="fourth"><input type="date" class="form-control" id="datepicker" formControlName="dateofBirth"></td>
+                <td class="fourth"><input type="date" class="form-control" id="datepicker" formControlName="dateofBirth" max="{{date | date:'yyyy-MM-dd'}}"></td>
               </tr>
               <!-- validation -->
               <tr>
@@ -42,7 +42,7 @@
                 <td class="first"><label for="">Rank :</label></td>
                 <td class="second">
                   <select class="form-select form-control" formControlName="rank">
-                    <option value="default" selected>Select your Rank</option>
+                    <option value="default" selected>Select Rank</option>
                     <option *ngFor="let rank of rankOptions; let i = index;" value="{{i}}">
                       {{rank}}
                     </option>
@@ -51,7 +51,7 @@
                 <td class="third"><label for="">Department :</label></td>
                 <td class="fourth">
                   <select class="form-select form-control" formControlName="department">
-                    <option value="default" selected>Select your Department</option>
+                    <option value="default" selected>Select Department</option>
                     <option *ngFor="let department of departmentOptions; let i = index;" value="{{i}}">
                       {{department | titlecase}}
                     </option>

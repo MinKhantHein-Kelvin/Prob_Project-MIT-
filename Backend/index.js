@@ -23,6 +23,8 @@ app.use(bodyParser.json());
 app.use("/api/employee", employeeRoute);
 app.use("/api/department", departmentRoute);
 app.use("/api/rank", rankRoute);
+app.use('/Image', express.static('upload/images'));
+
 
 app.listen(3000, ()=>{
     console.log("Server is running on port 3000");

@@ -11,6 +11,7 @@ import { EmployeeService } from '../services/employee.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit{
+  date : any;
   employeeForm: FormGroup;
   rankOptions = [
     'Manager',
@@ -35,6 +36,7 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.date = Date.now();
     this.employeeForm = this.fb.group({
       empId: this.fb.control('',Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6)])),
       joinDate: this.fb.control(''),
