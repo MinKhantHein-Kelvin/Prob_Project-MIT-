@@ -20,3 +20,9 @@
         }
     }
 }
+[type=search].form-control:focus, 
+[contenteditable].form-control:focus {
+  box-shadow: none;
+ border-top-right-radius: 0px;
+ border-bottom-right-radius: 0px;
+}

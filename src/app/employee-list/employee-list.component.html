@@ -1,24 +1,28 @@
-<div class="container-fluid">
+<div class="container-fluid pb-1">
   <div class="d-flex justify-content-between">
-    <button mat-raised-button class="mt-4 mb-2" [routerLink]="['/']"><mat-icon>add</mat-icon>New</button>
+    <div class="d-flex">
+      <input type="file" class="mb-2 mr-1" (change)="readExcel($event)" style="width: 210px;margin-top: 24px; border: 1px dashed green; padding: 6px;" #fileInput />
+      <button mat-raised-button class="mt-4 mb-2 bg-info text-white mr-2" (click)="importExcel()"><mat-icon class="mr-1">present_to_all</mat-icon>Import</button>
+      <button mat-raised-button  class="mt-4 mb-2 bg-success text-white" (click)="excelExport()"><mat-icon class="mr-1">system_update_alt</mat-icon>Export</button>
+    </div>
+    <!-- <button mat-raised-button class="mt-4 mb-2" [routerLink]="['/']"><mat-icon>add</mat-icon>New</button> -->
     <div class="right-side d-flex">
-      <!-- <form class="form-inline"> -->
-        <!-- <mat-form-field style="margin-top: 6px; margin-right: 8px;">
-          <mat-label class="text-warning">Search Employee......</mat-label>
-          <input matInput placeholder="Search ID or Name" formControlName="obj">
-        </mat-form-field> -->
-      <!-- </form> -->
-      <button mat-raised-button color="primary" class="mt-4 mb-2" (click)="getAllEmployee()"><mat-icon>group</mat-icon>All</button>
+      <div class="input-group">
+        <input type="search" class="form-control mt-4 mb-2" placeholder="Search" aria-label="Search" aria-describedby="search-addon" (keyup)="applyFilter($event)" #searchInput style="width: 140px;"/>
+        <button mat-raised-button color="warn" class="mt-4 mb-2 mr-2" style="border-radius: 0px;height: 37px;" (click)="applyFilter($event)">Search</button> 
+      </div>
+      <button mat-raised-button color="primary" class="mt-4 mb-2 mr-2" (click)="setPagination()" style="width: 100px;"><mat-icon class="mr-1">group</mat-icon>All</button>
+      <button mat-raised-button class="mt-4 mb-2" [routerLink]="['/']" style="width: 110px;"><mat-icon>add</mat-icon>New</button>
     </div>
   </div>
 
     <div class="employee-list">
-        <table class="table table-striped">
+        <table class="table table-striped mb-0">
             <thead>
               <tr>
-                <th scope="col">Employee ID</th>
-                <th scope="col">Joined Date</th>
+                <th scope="col">Employee ID</th>                
                 <th scope="col">Employee Name</th>
+                <th scope="col">Joined Date</th>
                 <th scope="col">Date of Birth</th>
                 <th scope="col">Rank</th>
                 <th scope="col">Department</th>
@@ -32,10 +36,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let employee of employees">
+              <tr *ngFor="let employee of employeeObs$ | async">
                 <td style="font-weight: bold;">{{employee.empId}}</td>
-                <td>{{employee.Joined_Date}}</td>
                 <td>{{employee.Employee_Name}}</td>
+                <td>{{employee.Joined_Date}}</td>                
                 <td>{{employee.Date_of_Birth}}</td>
                 <td>{{employee.Ranking}}</td>
                 <td>{{employee.Department}}</td>
@@ -46,11 +50,12 @@
                 <td>{{employee.Address}}</td>
                 <td>{{employee.Remark}}</td>
                 <td>
-                    <mat-icon class="edit-icon mr-2" color="primary" >edit</mat-icon>
+                    <mat-icon class="edit-icon mr-2" color="primary" routerLink="/{{employee.empId}}" (click)="editEmployee(employee)">edit</mat-icon>
                     <mat-icon class="delete-icon" color="warn" (click)="deleteEmployee(employee)">delete_forever</mat-icon>
                 </td>
               </tr>
             </tbody>
           </table>
+          <mat-paginator showFirstLastButtons style="height: 58px;" [pageSizeOptions]="[10, 20, 25, 100]"></mat-paginator>
     </div>
 </div>

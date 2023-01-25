@@ -1,12 +1,13 @@
 export class Employee {
-    empId: number = 0;
+    Image : any;
+    empId: string = '';
     Joined_Date: string = '';
     Employee_Name: string = '';
     Date_of_Birth: string = '';
-    Ranking: string = '';
-    Department: string = '';
+    Ranking: any;
+    Department: any;
     Gender: string = '';
-    Interest: string = '';
+    Interest: any;
     Phone: string = '';
     Email: number = 0;
     Address: number = 0;

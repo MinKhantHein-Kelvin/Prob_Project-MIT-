@@ -1,20 +1,44 @@
-<div class="container-fluid empContainer">
-    <h2 class="add-emp-title text-center pt-4">Add New Employee</h2>
+<div class="container-fluid">
+    <h2 class="add-emp-title text-center pt-3">Add Employee Form</h2>
     <div class="row">
       <div class="emp-form">
-        <form [formGroup]="employeeForm">
+        <form [formGroup]="employeeForm" enctype="multipart/form-data">
           <div class="container">
             <table>
               <tr>
+                <td colspan="4">
+                  <!-- <div class="d-flex justify-content-center"> -->
+                    <div class="image-upload" *ngIf="!isHidden">
+                      <img src="../../assets/img/upload-photo.svg" alt="">
+                      <p>upload a photo</p>
+                    </div>
+                    <div class="image-show" [hidden]="(url != null && url != '' && url !=undefined)? false : true">
+                      <img [src]="url" alt="">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <input type="file" id="img" style="display:none;" accept="image/*" (change)="selectImage($event)">
+                      <label class="uploadBtn" for="img">Upload Image</label>
+                    </div>      
+                    <div class="d-flex justify-content-center">
+                      <div *ngIf="imageDisplayError" class="errorMessage">
+                        <span>*{{imageErrorMessage}}</span>
+                      </div>
+                    </div>               
+  
+                  <!-- </div> -->
+                </td>
+              </tr>
+              <p></p>
+              <tr>
                 <td class="first"><label for="">Employee ID :</label></td>
-                <td class="second"><input type="text" class="form-control" placeholder="eg.100001" formControlName="empId" [class.is-invalid]="EmpId.invalid && EmpId.touched"></td>
+                <td class="second"><input type="text" class="form-control" placeholder="eg.000001" formControlName="empId" [class.is-invalid]="EmpId.invalid && EmpId.touched"></td>
                 <td class="third"><label for="">Joined Date :</label></td>
                 <td class="fourth"><input type="date" class="form-control" id="datepicker" formControlName="joinDate" max="{{date | date:'yyyy-MM-dd'}}"></td>
               </tr>
               <!-- validation -->
               <tr>
                 <td colspan="2">
-                  <div *ngIf="(EmpId.invalid && EmpId.touched) || EmpId.dirty" style="margin-left: 150px;">
+                  <div *ngIf="(EmpId.invalid && EmpId.touched) || EmpId.dirty" style="margin-left: 210px;">
                     <small *ngIf="EmpId.errors?.['required']" class="text-danger">*Emplyoee ID is required</small>
                     <small *ngIf="EmpId?.errors?.['minlength'] || EmpId?.errors?.['maxlength']" class="text-danger">*Employee ID must be 6 character.</small>
                   </div>
@@ -31,7 +55,7 @@
               <!-- validation -->
               <tr>
                 <td colspan="2">
-                  <div *ngIf="(EmpName.invalid && EmpName.touched) || EmpName.dirty" style="margin-left: 150px;">
+                  <div *ngIf="(EmpName.invalid && EmpName.touched) || EmpName.dirty" style="margin-left: 210px;">
                     <small *ngIf="EmpName.errors?.['required']" class="text-danger">*Emplyoee Name is required</small>
                   </div>
                 </td>
@@ -42,7 +66,7 @@
                 <td class="first"><label for="">Rank :</label></td>
                 <td class="second">
                   <select class="form-select form-control" formControlName="rank">
-                    <option value="default" selected>Select Rank</option>
+                    <option value="default" disabled hidden selected>Select Rank</option>
                     <option *ngFor="let rank of rankOptions; let i = index;" value="{{i}}">
                       {{rank}}
                     </option>
@@ -51,25 +75,45 @@
                 <td class="third"><label for="">Department :</label></td>
                 <td class="fourth">
                   <select class="form-select form-control" formControlName="department">
-                    <option value="default" selected>Select Department</option>
+                    <option value="default" disabled hidden selected>Select Department</option>
                     <option *ngFor="let department of departmentOptions; let i = index;" value="{{i}}">
                       {{department | titlecase}}
                     </option>
                   </select>
                 </td>
               </tr>
+              <!-- <tr>
+                <td class="first"><label for="">Rank :</label></td>
+                <td class="second">
+                  <select class="form-select form-control" formControlName="rank">
+                    <option value="default" selected>Select Rank</option>
+                    <option *ngFor="let rank of rankOptions" value="{{rank.ID}}">
+                      {{rank.Ranking}}
+                    </option>
+                  </select>
+                </td>
+                <td class="third"><label for="">Department :</label></td>
+                <td class="fourth">
+                  <select class="form-select form-control" formControlName="department">
+                    <option value="default" selected>Select Department</option>
+                    <option *ngFor="let department of departmentOptions;" value="{{department.ID}}">
+                      {{department.Department}}
+                    </option>
+                  </select>
+                </td>
+              </tr> -->
               <p></p>
   
               <tr>
                 <td class="first"><label for="">Gender :</label></td>
                 <td class="second">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="male" value="m"
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="male"
                       formControlName="gender">
                     <label class="form-check-label" for="male">Male</label>
                   </div>
                   <div class="form-check form-check-inline ml-2">
-                    <input class="form-check-input" type="radio" name="gender" id="female" value="f"
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="female"
                       formControlName="gender">
                     <label class="form-check-label" for="female">Female</label>
                   </div>
@@ -78,32 +122,11 @@
                 <td class="fourth">
                   <div class="interest-container">
                     <div *ngFor="let interest of interests; let i=index" class="checkboxItem">
-                        <input type="checkbox" formArrayName="interest" [value]="interest.value" (change)="onCheckboxChange($event)" 
+                        <input type="checkbox" formArrayName="interest" [value]="interest.value" (change)="onCheckboxChange($event)"
                         />
                         {{ interest.name}}
                       </div>
                   </div>
-                  
-                  <!-- <div class="d-flex">
-                    <div class="form-group form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1"  formControlName="interest">
-                      <label class="form-check-label" for="exampleCheck1">Reading</label>
-                    </div>
-                    <div class="form-group form-check ml-3">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1"  formControlName="interest">
-                      <label class="form-check-label" for="exampleCheck1">Listing</label>
-                    </div>
-                  </div>
-                  <div class="d-flex">
-                    <div class="form-group form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1"  formControlName="interest">
-                      <label class="form-check-label" for="exampleCheck1">Playing</label>
-                    </div>
-                    <div class="form-group form-check" style="margin-left: 22px;">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1"  formControlName="interest">
-                      <label class="form-check-label" for="exampleCheck1">Singing</label>
-                    </div>
-                  </div> -->
                 </td>
               </tr>
               <p></p>
@@ -120,7 +143,7 @@
               <!-- Validation -->
               <tr>
                 <td colspan="2">
-                  <div *ngIf="(Phone.invalid && Phone.touched) || Phone.dirty" style="margin-left: 150px;">
+                  <div *ngIf="(Phone.invalid && Phone.touched) || Phone.dirty" style="margin-left: 210px;">
                     <small *ngIf="Phone.errors?.['required']" class="text-danger">*Phone is required</small>
                     <small *ngIf="Phone?.errors?.['pattern']" class="text-danger">*Invalid Phone Number</small>
                   </div>
@@ -143,22 +166,64 @@
               <tr>
                 <td class="first"><label for="">Remark :</label></td>
                 <td class="second" colspan="3">
-                  <textarea class="form-control" id="validationTextarea" style="height: 120px;" formControlName="remark"></textarea>
-                </td>
-              </tr>
-              <br>
-              <tr>
-                <td colspan="4">
-  
-                  <button mat-raised-button color="primary" class="float-right" (click)="addEmployee()">Save</button>
-                  <button mat-raised-button color="warn" class="float-right mr-2" (click)="browse()">Browse</button>
+                  <textarea class="form-control" id="validationTextarea" style="height: 100px;" formControlName="remark"></textarea>
                 </td>
               </tr>
             </table>
           </div>
         </form>
+
+        <div class="container mt-4" *ngIf="leaveShow">
+          <ng-container *ngIf="this.dynamicArray.length >= 1">
+            <button mat-raised-button color="primary" class="float-right mb-1" (click)="addRow(addIndex)">ADD Row</button>
+            <table class="table table-striped table-bordered">
+              <thead>
+                  <tr>
+                      <th>Leave Type</th>
+                      <th>From Date</th>
+                      <th>To Date</th>
+                      <th>Days</th>
+                      <th>Reason</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+
+                  <tr *ngFor="let dynamic of dynamicArray; let i=index;">                                 
+                      <td style="width: 200px;">
+                        <select class="form-select form-control" [(ngModel)]="dynamic.Leave_Type" name="leaveType{{i}}">
+                          <option value="default" disabled hidden>Select Leave Type</option>
+                          <option *ngFor="let leave of leaveOptions; let i = index;" value="{{leave}}">
+                            {{leave}}
+                          </option>
+                        </select>
+                        <td>
+                          <input type="date" class="form-control" name="fromDate{{i}}"  [(ngModel)]="dynamic.From_Date" min="{{leavemaxDate | date:'yyyy-MM-dd'}}">
+                        </td>
+                        <td>
+                          <input type="date" class="form-control" name="toDate{{i}}" [(ngModel)]="dynamic.To_Date" (change)="NumberOfDays(dynamic.id, dynamic.From_Date, dynamic.To_Date)" min="{{leavemaxDate | date:'yyyy-MM-dd'}}">
+                        </td>
+                        <td style="width: 80px;">
+                          <input type="text" class="form-control" name="days{{i}}" id="" [(ngModel)]="dynamic.Days"  readonly>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" name="reason{{i}}" id="" [(ngModel)]="dynamic.Reason" >
+                        </td>
+                      <td>                        
+                        <button mat-raised-button color="warn" (click)="deleteRow(i)" class="ml-2">Remove</button>
+                      </td>
+                  </tr>    
+              </tbody>
+            </table>
+          </ng-container>
+          
+        </div>
+        <div class="container mt-5">
+          <button mat-raised-button color="primary" class="float-right" [disabled]="!this.employeeForm.valid" (click)="addEmployee()">Save</button>
+          <button mat-raised-button color="accent" class="float-right mr-2" (click)="browse()">Browse</button>
+          <button mat-raised-button *ngIf="this.dynamicArray.length < 1"  class="float-right mr-2" (click)="addRow(addIndex)">Leave</button>
+          <button mat-raised-button *ngIf="this.dynamicArray.length >= 1" class="float-right mr-2" (click)="showLeave()" >Leave</button>
+        </div>
       </div>
     </div>
-  </div>
-  
   

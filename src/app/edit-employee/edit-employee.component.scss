@@ -1,0 +1,101 @@
+.emp-form{
+    background: #e9ecec;
+    // height: 100vh;
+    width: 70% !important;
+    margin: 0 auto;
+    padding: 20px 0px;
+    margin-bottom: 50px;
+    // .add-emp-title{
+    //   font-family: Poppins, sans-serif;
+    // }
+    table{
+      tr{
+        // line-height: 3;
+        .first{
+          width: 20%;
+          text-align: left;
+          padding-left: 5px;
+        }
+        .second{
+          width: 28%;
+        }
+        .third{
+          width: 20%;
+          text-align: left;
+          padding-left: 30px;
+        }
+        .fourth{
+          width: 28%; 
+
+          .interest-container{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+
+            .checkboxItem{
+                width: 50%;
+                line-height: 2em;
+              }
+          }         
+        }
+        .image-upload{
+          width: 135px;
+          height: 120px;
+          border-radius: 10px;
+          text-align: center;
+          border: 3px dashed #ABABAB;
+          margin: 0 auto;
+          img{
+            width: 45px;
+            height: 45px;
+            margin-top: 27px;
+          }
+          p{
+            font-size: 12px;
+            color: #ABABAB;
+          }
+        }
+        .image-show{
+          display: flex;
+          img{
+            border: 3px dashed #600FB2;
+            z-index: 900;
+            border-radius: 10px;
+            width: 135px;
+            height: 120px;
+            margin: 0 auto;
+          }
+        }
+        .uploadBtn {
+          background-color: rgb(255, 255, 255);
+          border: solid 2px rgb(10, 112, 10);
+          border-radius: 6px;
+          color: green;
+          padding: 8px 20px;
+          text-align: center;
+          font-size: 14px;
+          font-weight: 500;
+          margin: 6px 7px;
+          cursor: pointer;
+        }
+        .form-check-input {
+          width: 1rem !important;
+          height: 1rem !important;
+        }
+        input[type=checkbox] {
+          width: 1rem;
+          height: 13px;
+        }
+        .example-radio-group {
+          display: flex;
+          flex-direction: row;
+          margin: 15px 0;
+          align-items: flex-start;
+        }
+        
+        .example-radio-button {
+          margin: 5px;
+        }
+      }
+    }
+  }
